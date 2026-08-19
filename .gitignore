@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# Local credentials — never commit (Cloudflare R2 keys live here)
+.env
+.env.local
+.env.*.local
+
+# Legacy local runtime data (no longer used — storage is Cloudflare R2)
+server/uploads/
+server/data/
+client/

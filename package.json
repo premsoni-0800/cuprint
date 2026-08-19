@@ -1,0 +1,25 @@
+{
+  "name": "print-shop-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dashboard for print shop owners to receive, preview, and download customer files (PDF, images, Word docs).",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true,
+    "protobufjs@7.6.5": true,
+    "@firebase/util@1.15.2": true
+  }
+}

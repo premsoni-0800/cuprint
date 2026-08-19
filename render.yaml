@@ -1,0 +1,33 @@
+# render.yaml — Render Blueprint for the Print Shop API
+# Deploy: Render dashboard → New + → Blueprint → select this repo.
+# (render.yaml is picked up automatically.) Then fill in the "sync: false"
+# variables in the Render dashboard — they are never committed to the repo.
+#
+# Files and job records live in Cloudflare R2, so no persistent disk or
+# database is needed — free-tier redeploys and sleep cycles don't lose data.
+services:
+  - type: web
+    name: print-shop-api
+    runtime: node
+    rootDir: render
+    plan: free
+    buildCommand: npm install
+    startCommand: node src/index.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
+      # ── Cloudflare R2 (files + job records) ──────────────────────────────
+      - key: CLOUDFLARE_ACCOUNT_ID
+        sync: false
+      - key: CLOUDFLARE_R2_ACCESS_KEY_ID
+        sync: false
+      - key: CLOUDFLARE_R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        value: print-jobs
+      - key: CORS_ORIGIN
+        sync: false # e.g. https://cusheetgenerator.com,https://www.cusheetgenerator.com
+      - key: DEMO_FILES
+        value: "0"
